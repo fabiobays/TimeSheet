@@ -58,4 +58,10 @@
   <ItemGroup>
     <Folder Include="Properties" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="Employee.sql" />
+    <Build Include="TimeSheetMonth.sql" />
+    <Build Include="TimeSheet.sql" />
+    <Build Include="Payment.sql" />
+  </ItemGroup>
 </Project>
