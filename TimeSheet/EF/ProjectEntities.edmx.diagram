@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="34f6f9115f444c0584500242804adbff" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectModel.Employee" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Payment" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.TimeSheet" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.TimeSheetMonth" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="ProjectModel.FK_Payment_ToEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_TimeSheet_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_TimeSheetMonth_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_Payment_ToTimeSheetMonth" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_TimeSheet_TiomeSheetMonth" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

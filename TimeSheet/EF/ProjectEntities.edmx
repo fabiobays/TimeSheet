@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="120" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="120" />
+          <Property Name="address" Type="nvarchar" MaxLength="120" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="hourlyRate" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeId" Type="int" Nullable="false" />
+          <Property Name="timesheetMonthId" Type="int" Nullable="false" />
+          <Property Name="hourlyRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="gross" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="cpp" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ei" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="net" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="tax" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TimeSheet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeId" Type="int" Nullable="false" />
+          <Property Name="timesheetMonthId" Type="int" Nullable="false" />
+          <Property Name="day" Type="int" Nullable="false" />
+          <Property Name="hoursWorked" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="TimeSheetMonth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeId" Type="int" Nullable="false" />
+          <Property Name="month" Type="int" Nullable="false" />
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="totalHours" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Payment_ToEmployee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_ToTimeSheetMonth">
+          <End Role="TimeSheetMonth" Type="Self.TimeSheetMonth" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSheetMonth">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="timesheetMonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSheet_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheet">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSheet_TiomeSheetMonth">
+          <End Role="TimeSheetMonth" Type="Self.TimeSheetMonth" Multiplicity="1" />
+          <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSheetMonth">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheet">
+              <PropertyRef Name="timesheetMonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSheetMonth_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="TimeSheetMonth" Type="Self.TimeSheetMonth" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheetMonth">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectModelStoreContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TimeSheetMonth" EntityType="Self.TimeSheetMonth" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Payment_ToEmployee" Association="Self.FK_Payment_ToEmployee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_ToTimeSheetMonth" Association="Self.FK_Payment_ToTimeSheetMonth">
+            <End Role="TimeSheetMonth" EntitySet="TimeSheetMonth" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSheet_Employee" Association="Self.FK_TimeSheet_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TimeSheet" EntitySet="TimeSheet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSheet_TiomeSheetMonth" Association="Self.FK_TimeSheet_TiomeSheetMonth">
+            <End Role="TimeSheetMonth" EntitySet="TimeSheetMonth" />
+            <End Role="TimeSheet" EntitySet="TimeSheet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSheetMonth_Employee" Association="Self.FK_TimeSheetMonth_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TimeSheetMonth" EntitySet="TimeSheetMonth" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="hourlyRate" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Payment" Relationship="Self.FK_Payment_ToEmployee" FromRole="Employee" ToRole="Payment" />
+          <NavigationProperty Name="TimeSheet" Relationship="Self.FK_TimeSheet_Employee" FromRole="Employee" ToRole="TimeSheet" />
+          <NavigationProperty Name="TimeSheetMonth" Relationship="Self.FK_TimeSheetMonth_Employee" FromRole="Employee" ToRole="TimeSheetMonth" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeId" Type="Int32" Nullable="false" />
+          <Property Name="timesheetMonthId" Type="Int32" Nullable="false" />
+          <Property Name="hourlyRate" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="gross" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="cpp" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ei" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="net" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="tax" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Payment_ToEmployee" FromRole="Payment" ToRole="Employee" />
+          <NavigationProperty Name="TimeSheetMonth" Relationship="Self.FK_Payment_ToTimeSheetMonth" FromRole="Payment" ToRole="TimeSheetMonth" />
+        </EntityType>
+        <EntityType Name="TimeSheet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeId" Type="Int32" Nullable="false" />
+          <Property Name="timesheetMonthId" Type="Int32" Nullable="false" />
+          <Property Name="day" Type="Int32" Nullable="false" />
+          <Property Name="hoursWorked" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_TimeSheet_Employee" FromRole="TimeSheet" ToRole="Employee" />
+          <NavigationProperty Name="TimeSheetMonth" Relationship="Self.FK_TimeSheet_TiomeSheetMonth" FromRole="TimeSheet" ToRole="TimeSheetMonth" />
+        </EntityType>
+        <EntityType Name="TimeSheetMonth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeId" Type="Int32" Nullable="false" />
+          <Property Name="month" Type="Int32" Nullable="false" />
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="totalHours" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_TimeSheetMonth_Employee" FromRole="TimeSheetMonth" ToRole="Employee" />
+          <NavigationProperty Name="Payment" Relationship="Self.FK_Payment_ToTimeSheetMonth" FromRole="TimeSheetMonth" ToRole="Payment" />
+          <NavigationProperty Name="TimeSheet" Relationship="Self.FK_TimeSheet_TiomeSheetMonth" FromRole="TimeSheetMonth" ToRole="TimeSheet" />
+        </EntityType>
+        <Association Name="FK_Payment_ToEmployee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSheet_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheet">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSheetMonth_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="TimeSheetMonth" Type="Self.TimeSheetMonth" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheetMonth">
+              <PropertyRef Name="employeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_ToTimeSheetMonth">
+          <End Role="TimeSheetMonth" Type="Self.TimeSheetMonth" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSheetMonth">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="timesheetMonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSheet_TiomeSheetMonth">
+          <End Role="TimeSheetMonth" Type="Self.TimeSheetMonth" Multiplicity="1" />
+          <End Role="TimeSheet" Type="Self.TimeSheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TimeSheetMonth">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TimeSheet">
+              <PropertyRef Name="timesheetMonthId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" />
+          <EntitySet Name="TimeSheet" EntityType="Self.TimeSheet" />
+          <EntitySet Name="TimeSheetMonth" EntityType="Self.TimeSheetMonth" />
+          <AssociationSet Name="FK_Payment_ToEmployee" Association="Self.FK_Payment_ToEmployee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSheet_Employee" Association="Self.FK_TimeSheet_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TimeSheet" EntitySet="TimeSheet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSheetMonth_Employee" Association="Self.FK_TimeSheetMonth_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="TimeSheetMonth" EntitySet="TimeSheetMonth" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_ToTimeSheetMonth" Association="Self.FK_Payment_ToTimeSheetMonth">
+            <End Role="TimeSheetMonth" EntitySet="TimeSheetMonth" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSheet_TiomeSheetMonth" Association="Self.FK_TimeSheet_TiomeSheetMonth">
+            <End Role="TimeSheetMonth" EntitySet="TimeSheetMonth" />
+            <End Role="TimeSheet" EntitySet="TimeSheet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectModelStoreContainer" CdmEntityContainer="ProjectEntities">
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="ProjectModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="hourlyRate" ColumnName="hourlyRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment">
+            <EntityTypeMapping TypeName="ProjectModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="timesheetMonthId" ColumnName="timesheetMonthId" />
+                <ScalarProperty Name="hourlyRate" ColumnName="hourlyRate" />
+                <ScalarProperty Name="gross" ColumnName="gross" />
+                <ScalarProperty Name="cpp" ColumnName="cpp" />
+                <ScalarProperty Name="ei" ColumnName="ei" />
+                <ScalarProperty Name="net" ColumnName="net" />
+                <ScalarProperty Name="tax" ColumnName="tax" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeSheet">
+            <EntityTypeMapping TypeName="ProjectModel.TimeSheet">
+              <MappingFragment StoreEntitySet="TimeSheet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="timesheetMonthId" ColumnName="timesheetMonthId" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="hoursWorked" ColumnName="hoursWorked" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TimeSheetMonth">
+            <EntityTypeMapping TypeName="ProjectModel.TimeSheetMonth">
+              <MappingFragment StoreEntitySet="TimeSheetMonth">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="employeeId" ColumnName="employeeId" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="totalHours" ColumnName="totalHours" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
