@@ -29,6 +29,13 @@ namespace TimeSheet
             this.comboBoxPaymentYear.SelectedIndexChanged += ComboBoxPaymentYear_SelectedIndexChanged;
             this.btUpdate.Click += BtUpdate_Click;
             this.btSave.Click += BtSave_Click;
+            this.btnGoback.Click += BtnGoback_Click;
+        }
+
+        private void BtnGoback_Click(object sender, EventArgs e)
+        {
+            ParentForm.Show();
+            this.Hide();
         }
 
         private void BtSave_Click(object sender, EventArgs e)

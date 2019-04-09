@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeForm));
             this.labelSelectMonthYear = new System.Windows.Forms.Label();
             this.comboBoxPaymentMonth = new System.Windows.Forms.ComboBox();
@@ -67,6 +70,7 @@
             this.btSave = new System.Windows.Forms.Button();
             this.labelInstructions = new System.Windows.Forms.Label();
             this.btUpdate = new System.Windows.Forms.Button();
+            this.btnGoback = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).BeginInit();
@@ -78,7 +82,8 @@
             // 
             this.labelSelectMonthYear.AutoSize = true;
             this.labelSelectMonthYear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSelectMonthYear.Location = new System.Drawing.Point(12, 10);
+            this.labelSelectMonthYear.ForeColor = System.Drawing.Color.White;
+            this.labelSelectMonthYear.Location = new System.Drawing.Point(12, 12);
             this.labelSelectMonthYear.Name = "labelSelectMonthYear";
             this.labelSelectMonthYear.Size = new System.Drawing.Size(141, 20);
             this.labelSelectMonthYear.TabIndex = 0;
@@ -100,7 +105,7 @@
             "October",
             "November",
             "December"});
-            this.comboBoxPaymentMonth.Location = new System.Drawing.Point(16, 34);
+            this.comboBoxPaymentMonth.Location = new System.Drawing.Point(16, 36);
             this.comboBoxPaymentMonth.Name = "comboBoxPaymentMonth";
             this.comboBoxPaymentMonth.Size = new System.Drawing.Size(77, 21);
             this.comboBoxPaymentMonth.TabIndex = 1;
@@ -120,7 +125,7 @@
             "2027",
             "2028",
             "2029"});
-            this.comboBoxPaymentYear.Location = new System.Drawing.Point(99, 34);
+            this.comboBoxPaymentYear.Location = new System.Drawing.Point(99, 36);
             this.comboBoxPaymentYear.Name = "comboBoxPaymentYear";
             this.comboBoxPaymentYear.Size = new System.Drawing.Size(77, 21);
             this.comboBoxPaymentYear.TabIndex = 2;
@@ -132,9 +137,11 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dataGridViewTaxes);
             this.groupBox1.Controls.Add(this.dataGridViewTotalPay);
-            this.groupBox1.Location = new System.Drawing.Point(182, 12);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(192, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(462, 268);
+            this.groupBox1.Size = new System.Drawing.Size(490, 281);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Monthly Report";
@@ -147,9 +154,10 @@
             this.groupBox2.Controls.Add(this.labelTax);
             this.groupBox2.Controls.Add(this.textBoxTotalPay);
             this.groupBox2.Controls.Add(this.labelTotalPay);
-            this.groupBox2.Location = new System.Drawing.Point(256, 141);
+            this.groupBox2.ForeColor = System.Drawing.Color.White;
+            this.groupBox2.Location = new System.Drawing.Point(269, 145);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(195, 120);
+            this.groupBox2.Size = new System.Drawing.Size(215, 130);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Summary";
@@ -157,54 +165,54 @@
             // textBoxNetPay
             // 
             this.textBoxNetPay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxNetPay.Location = new System.Drawing.Point(68, 74);
+            this.textBoxNetPay.Location = new System.Drawing.Point(106, 88);
             this.textBoxNetPay.Name = "textBoxNetPay";
             this.textBoxNetPay.ReadOnly = true;
-            this.textBoxNetPay.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNetPay.Size = new System.Drawing.Size(100, 26);
             this.textBoxNetPay.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 76);
+            this.label2.Location = new System.Drawing.Point(8, 90);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.Size = new System.Drawing.Size(68, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Net Pay:";
             // 
             // textBoxTaxes
             // 
             this.textBoxTaxes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxTaxes.Location = new System.Drawing.Point(68, 44);
+            this.textBoxTaxes.Location = new System.Drawing.Point(106, 55);
             this.textBoxTaxes.Name = "textBoxTaxes";
             this.textBoxTaxes.ReadOnly = true;
-            this.textBoxTaxes.Size = new System.Drawing.Size(100, 20);
+            this.textBoxTaxes.Size = new System.Drawing.Size(100, 26);
             this.textBoxTaxes.TabIndex = 3;
             // 
             // labelTax
             // 
             this.labelTax.AutoSize = true;
-            this.labelTax.Location = new System.Drawing.Point(7, 46);
+            this.labelTax.Location = new System.Drawing.Point(9, 59);
             this.labelTax.Name = "labelTax";
-            this.labelTax.Size = new System.Drawing.Size(39, 13);
+            this.labelTax.Size = new System.Drawing.Size(55, 20);
             this.labelTax.TabIndex = 2;
             this.labelTax.Text = "Taxes:";
             // 
             // textBoxTotalPay
             // 
             this.textBoxTotalPay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxTotalPay.Location = new System.Drawing.Point(68, 18);
+            this.textBoxTotalPay.Location = new System.Drawing.Point(106, 23);
             this.textBoxTotalPay.Name = "textBoxTotalPay";
             this.textBoxTotalPay.ReadOnly = true;
-            this.textBoxTotalPay.Size = new System.Drawing.Size(100, 20);
+            this.textBoxTotalPay.Size = new System.Drawing.Size(100, 26);
             this.textBoxTotalPay.TabIndex = 1;
             // 
             // labelTotalPay
             // 
             this.labelTotalPay.AutoSize = true;
-            this.labelTotalPay.Location = new System.Drawing.Point(7, 20);
+            this.labelTotalPay.Location = new System.Drawing.Point(7, 25);
             this.labelTotalPay.Name = "labelTotalPay";
-            this.labelTotalPay.Size = new System.Drawing.Size(55, 13);
+            this.labelTotalPay.Size = new System.Drawing.Size(78, 20);
             this.labelTotalPay.TabIndex = 0;
             this.labelTotalPay.Text = "Total Pay:";
             // 
@@ -212,7 +220,7 @@
             // 
             this.labelTaxes.AutoSize = true;
             this.labelTaxes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelTaxes.Location = new System.Drawing.Point(6, 133);
+            this.labelTaxes.Location = new System.Drawing.Point(19, 145);
             this.labelTaxes.Name = "labelTaxes";
             this.labelTaxes.Size = new System.Drawing.Size(51, 20);
             this.labelTaxes.TabIndex = 3;
@@ -222,7 +230,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 15);
+            this.label1.Location = new System.Drawing.Point(18, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(74, 20);
             this.label1.TabIndex = 2;
@@ -236,9 +244,12 @@
             this.dataGridViewTaxes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Taxes,
             this.Current});
-            this.dataGridViewTaxes.Location = new System.Drawing.Point(6, 156);
+            this.dataGridViewTaxes.Location = new System.Drawing.Point(19, 168);
             this.dataGridViewTaxes.Name = "dataGridViewTaxes";
             this.dataGridViewTaxes.ReadOnly = true;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.dataGridViewTaxes.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewTaxes.Size = new System.Drawing.Size(244, 105);
             this.dataGridViewTaxes.TabIndex = 1;
             // 
@@ -266,9 +277,12 @@
             this.Hours,
             this.Rate,
             this.Total});
-            this.dataGridViewTotalPay.Location = new System.Drawing.Point(6, 38);
+            this.dataGridViewTotalPay.Location = new System.Drawing.Point(19, 47);
             this.dataGridViewTotalPay.Name = "dataGridViewTotalPay";
             this.dataGridViewTotalPay.ReadOnly = true;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            this.dataGridViewTotalPay.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTotalPay.Size = new System.Drawing.Size(445, 92);
             this.dataGridViewTotalPay.TabIndex = 0;
             // 
@@ -300,7 +314,8 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(31, 101);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(31, 116);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(103, 20);
             this.label3.TabIndex = 5;
@@ -309,7 +324,8 @@
             // labelFirstName
             // 
             this.labelFirstName.AutoSize = true;
-            this.labelFirstName.Location = new System.Drawing.Point(1, 124);
+            this.labelFirstName.ForeColor = System.Drawing.Color.White;
+            this.labelFirstName.Location = new System.Drawing.Point(1, 147);
             this.labelFirstName.Name = "labelFirstName";
             this.labelFirstName.Size = new System.Drawing.Size(60, 13);
             this.labelFirstName.TabIndex = 6;
@@ -317,14 +333,14 @@
             // 
             // textBoxFirstName
             // 
-            this.textBoxFirstName.Location = new System.Drawing.Point(67, 121);
+            this.textBoxFirstName.Location = new System.Drawing.Point(67, 144);
             this.textBoxFirstName.Name = "textBoxFirstName";
             this.textBoxFirstName.Size = new System.Drawing.Size(112, 20);
             this.textBoxFirstName.TabIndex = 7;
             // 
             // textBoxLastName
             // 
-            this.textBoxLastName.Location = new System.Drawing.Point(67, 147);
+            this.textBoxLastName.Location = new System.Drawing.Point(67, 170);
             this.textBoxLastName.Name = "textBoxLastName";
             this.textBoxLastName.Size = new System.Drawing.Size(112, 20);
             this.textBoxLastName.TabIndex = 9;
@@ -332,7 +348,8 @@
             // labelLastName
             // 
             this.labelLastName.AutoSize = true;
-            this.labelLastName.Location = new System.Drawing.Point(1, 150);
+            this.labelLastName.ForeColor = System.Drawing.Color.White;
+            this.labelLastName.Location = new System.Drawing.Point(1, 173);
             this.labelLastName.Name = "labelLastName";
             this.labelLastName.Size = new System.Drawing.Size(61, 13);
             this.labelLastName.TabIndex = 8;
@@ -340,7 +357,7 @@
             // 
             // textBoxPhone
             // 
-            this.textBoxPhone.Location = new System.Drawing.Point(67, 173);
+            this.textBoxPhone.Location = new System.Drawing.Point(67, 196);
             this.textBoxPhone.Name = "textBoxPhone";
             this.textBoxPhone.Size = new System.Drawing.Size(109, 20);
             this.textBoxPhone.TabIndex = 11;
@@ -348,7 +365,8 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(20, 176);
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(20, 199);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 13);
             this.label4.TabIndex = 10;
@@ -357,18 +375,19 @@
             // labelSeparator
             // 
             this.labelSeparator.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.labelSeparator.Location = new System.Drawing.Point(4, 283);
+            this.labelSeparator.Location = new System.Drawing.Point(4, 292);
             this.labelSeparator.Name = "labelSeparator";
-            this.labelSeparator.Size = new System.Drawing.Size(640, 2);
+            this.labelSeparator.Size = new System.Drawing.Size(694, 10);
             this.labelSeparator.TabIndex = 12;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(241, 296);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(321, 309);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(145, 20);
+            this.label5.Size = new System.Drawing.Size(162, 20);
             this.label5.TabIndex = 13;
             this.label5.Text = "Monthly TimeSheet";
             // 
@@ -382,8 +401,10 @@
             this.HoursWorked,
             this.Day2,
             this.HoursWorked2});
-            this.dataGridViewTimeSheet.Location = new System.Drawing.Point(125, 319);
+            this.dataGridViewTimeSheet.Location = new System.Drawing.Point(192, 338);
             this.dataGridViewTimeSheet.Name = "dataGridViewTimeSheet";
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            this.dataGridViewTimeSheet.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewTimeSheet.Size = new System.Drawing.Size(444, 253);
             this.dataGridViewTimeSheet.TabIndex = 16;
             // 
@@ -411,35 +432,56 @@
             // 
             // btSave
             // 
-            this.btSave.Location = new System.Drawing.Point(575, 546);
+            this.btSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btSave.ForeColor = System.Drawing.Color.White;
+            this.btSave.Location = new System.Drawing.Point(291, 611);
             this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(64, 26);
+            this.btSave.Size = new System.Drawing.Size(73, 31);
             this.btSave.TabIndex = 17;
             this.btSave.Text = "Save";
             this.btSave.UseVisualStyleBackColor = true;
             // 
             // labelInstructions
             // 
-            this.labelInstructions.Location = new System.Drawing.Point(6, 319);
+            this.labelInstructions.ForeColor = System.Drawing.Color.White;
+            this.labelInstructions.Location = new System.Drawing.Point(12, 352);
             this.labelInstructions.Name = "labelInstructions";
-            this.labelInstructions.Size = new System.Drawing.Size(100, 229);
+            this.labelInstructions.Size = new System.Drawing.Size(164, 155);
             this.labelInstructions.TabIndex = 19;
             this.labelInstructions.Text = resources.GetString("labelInstructions.Text");
             // 
             // btUpdate
             // 
-            this.btUpdate.Location = new System.Drawing.Point(59, 250);
+            this.btUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btUpdate.ForeColor = System.Drawing.Color.White;
+            this.btUpdate.Location = new System.Drawing.Point(47, 236);
             this.btUpdate.Name = "btUpdate";
-            this.btUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btUpdate.Size = new System.Drawing.Size(94, 30);
             this.btUpdate.TabIndex = 20;
             this.btUpdate.Text = "Update";
             this.btUpdate.UseVisualStyleBackColor = true;
+            // 
+            // btnGoback
+            // 
+            this.btnGoback.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGoback.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoback.ForeColor = System.Drawing.Color.White;
+            this.btnGoback.Location = new System.Drawing.Point(435, 611);
+            this.btnGoback.Name = "btnGoback";
+            this.btnGoback.Size = new System.Drawing.Size(102, 31);
+            this.btnGoback.TabIndex = 21;
+            this.btnGoback.Text = "Go Back";
+            this.btnGoback.UseVisualStyleBackColor = true;
             // 
             // EmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(650, 584);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(111)))), ((int)(((byte)(155)))));
+            this.ClientSize = new System.Drawing.Size(698, 654);
+            this.Controls.Add(this.btnGoback);
             this.Controls.Add(this.btUpdate);
             this.Controls.Add(this.labelInstructions);
             this.Controls.Add(this.btSave);
@@ -511,5 +553,6 @@
         private System.Windows.Forms.Button btUpdate;
         private System.Windows.Forms.DataGridViewTextBoxColumn Taxes;
         private System.Windows.Forms.DataGridViewTextBoxColumn Current;
+        private System.Windows.Forms.Button btnGoback;
     }
 }

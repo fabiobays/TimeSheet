@@ -39,12 +39,19 @@ namespace TimeSheet
             setHourBtn.Click += SetHourBtn_Click;
             acceptTimesheetBtn.Click += AcceptTimesheetBtn_Click;
             declineBtn.Click += DeclineBtn_Click;
+            goBackBtn.Click += GoBackBtn_Click;
 
             // register timesheet select employee combobox
             timeSheetSelectEmployeeCB.DropDownClosed += TimeSheetSelectEmployeeCB_DropDownClosed;
             monthCB.DropDownClosed += MonthCB_DropDownClosed;
             yearCB.DropDownClosed += YearCB_DropDownClosed;
             
+        }
+
+        private void GoBackBtn_Click(object sender, EventArgs e)
+        {
+            ParentForm.Show();
+            this.Hide();
         }
 
         private void DeclineBtn_Click(object sender, EventArgs e)
