@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeeForm));
             this.labelSelectMonthYear = new System.Windows.Forms.Label();
             this.comboBoxPaymentMonth = new System.Windows.Forms.ComboBox();
             this.comboBoxPaymentYear = new System.Windows.Forms.ComboBox();
@@ -42,8 +43,6 @@
             this.labelTaxes = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewTaxes = new System.Windows.Forms.DataGridView();
-            this.Taxes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Current = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTotalPay = new System.Windows.Forms.DataGridView();
             this.Pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,19 +50,28 @@
             this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.labelFirstName = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxFirstName = new System.Windows.Forms.TextBox();
+            this.textBoxLastName = new System.Windows.Forms.TextBox();
             this.labelLastName = new System.Windows.Forms.Label();
             this.textBoxPhone = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.labelSeparator = new System.Windows.Forms.Label();
-            this.comboBoxTimeSheetYear = new System.Windows.Forms.ComboBox();
-            this.comboBoxTimeSheetMonth = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.dataGridViewTimeSheet = new System.Windows.Forms.DataGridView();
+            this.Day = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoursWorked = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Day2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HoursWorked2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btSave = new System.Windows.Forms.Button();
+            this.labelInstructions = new System.Windows.Forms.Label();
+            this.btUpdate = new System.Windows.Forms.Button();
+            this.Taxes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Current = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTotalPay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTimeSheet)).BeginInit();
             this.SuspendLayout();
             // 
             // labelSelectMonthYear
@@ -222,30 +230,22 @@
             // 
             // dataGridViewTaxes
             // 
+            this.dataGridViewTaxes.AllowUserToAddRows = false;
+            this.dataGridViewTaxes.AllowUserToDeleteRows = false;
             this.dataGridViewTaxes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTaxes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Taxes,
             this.Current});
             this.dataGridViewTaxes.Location = new System.Drawing.Point(6, 156);
             this.dataGridViewTaxes.Name = "dataGridViewTaxes";
+            this.dataGridViewTaxes.ReadOnly = true;
             this.dataGridViewTaxes.Size = new System.Drawing.Size(244, 105);
             this.dataGridViewTaxes.TabIndex = 1;
-            this.dataGridViewTaxes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
-            // 
-            // Taxes
-            // 
-            this.Taxes.HeaderText = "Taxes";
-            this.Taxes.Name = "Taxes";
-            this.Taxes.ReadOnly = true;
-            // 
-            // Current
-            // 
-            this.Current.HeaderText = "Current";
-            this.Current.Name = "Current";
-            this.Current.ReadOnly = true;
             // 
             // dataGridViewTotalPay
             // 
+            this.dataGridViewTotalPay.AllowUserToAddRows = false;
+            this.dataGridViewTotalPay.AllowUserToDeleteRows = false;
             this.dataGridViewTotalPay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTotalPay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Pay,
@@ -254,6 +254,7 @@
             this.Total});
             this.dataGridViewTotalPay.Location = new System.Drawing.Point(6, 38);
             this.dataGridViewTotalPay.Name = "dataGridViewTotalPay";
+            this.dataGridViewTotalPay.ReadOnly = true;
             this.dataGridViewTotalPay.Size = new System.Drawing.Size(445, 92);
             this.dataGridViewTotalPay.TabIndex = 0;
             // 
@@ -300,19 +301,19 @@
             this.labelFirstName.TabIndex = 6;
             this.labelFirstName.Text = "First Name:";
             // 
-            // textBox1
+            // textBoxFirstName
             // 
-            this.textBox1.Location = new System.Drawing.Point(67, 121);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(112, 20);
-            this.textBox1.TabIndex = 7;
+            this.textBoxFirstName.Location = new System.Drawing.Point(67, 121);
+            this.textBoxFirstName.Name = "textBoxFirstName";
+            this.textBoxFirstName.Size = new System.Drawing.Size(112, 20);
+            this.textBoxFirstName.TabIndex = 7;
             // 
-            // textBox2
+            // textBoxLastName
             // 
-            this.textBox2.Location = new System.Drawing.Point(67, 147);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(112, 20);
-            this.textBox2.TabIndex = 9;
+            this.textBoxLastName.Location = new System.Drawing.Point(67, 147);
+            this.textBoxLastName.Name = "textBoxLastName";
+            this.textBoxLastName.Size = new System.Drawing.Size(112, 20);
+            this.textBoxLastName.TabIndex = 9;
             // 
             // labelLastName
             // 
@@ -347,71 +348,109 @@
             this.labelSeparator.Size = new System.Drawing.Size(640, 2);
             this.labelSeparator.TabIndex = 12;
             // 
-            // comboBoxTimeSheetYear
-            // 
-            this.comboBoxTimeSheetYear.FormattingEnabled = true;
-            this.comboBoxTimeSheetYear.Items.AddRange(new object[] {
-            "2019",
-            "2020",
-            "2021",
-            "2022",
-            "2023",
-            "2024",
-            "2025",
-            "2026",
-            "2027",
-            "2028",
-            "2029"});
-            this.comboBoxTimeSheetYear.Location = new System.Drawing.Point(314, 319);
-            this.comboBoxTimeSheetYear.Name = "comboBoxTimeSheetYear";
-            this.comboBoxTimeSheetYear.Size = new System.Drawing.Size(77, 21);
-            this.comboBoxTimeSheetYear.TabIndex = 15;
-            // 
-            // comboBoxTimeSheetMonth
-            // 
-            this.comboBoxTimeSheetMonth.FormattingEnabled = true;
-            this.comboBoxTimeSheetMonth.Items.AddRange(new object[] {
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"});
-            this.comboBoxTimeSheetMonth.Location = new System.Drawing.Point(231, 319);
-            this.comboBoxTimeSheetMonth.Name = "comboBoxTimeSheetMonth";
-            this.comboBoxTimeSheetMonth.Size = new System.Drawing.Size(77, 21);
-            this.comboBoxTimeSheetMonth.TabIndex = 14;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(241, 296);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(135, 20);
+            this.label5.Size = new System.Drawing.Size(145, 20);
             this.label5.TabIndex = 13;
-            this.label5.Text = "Select TimeSheet";
+            this.label5.Text = "Monthly TimeSheet";
+            // 
+            // dataGridViewTimeSheet
+            // 
+            this.dataGridViewTimeSheet.AllowUserToAddRows = false;
+            this.dataGridViewTimeSheet.AllowUserToDeleteRows = false;
+            this.dataGridViewTimeSheet.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTimeSheet.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Day,
+            this.HoursWorked,
+            this.Day2,
+            this.HoursWorked2});
+            this.dataGridViewTimeSheet.Location = new System.Drawing.Point(125, 319);
+            this.dataGridViewTimeSheet.Name = "dataGridViewTimeSheet";
+            this.dataGridViewTimeSheet.Size = new System.Drawing.Size(444, 253);
+            this.dataGridViewTimeSheet.TabIndex = 16;
+            // 
+            // Day
+            // 
+            this.Day.HeaderText = "Day";
+            this.Day.Name = "Day";
+            this.Day.ReadOnly = true;
+            // 
+            // HoursWorked
+            // 
+            this.HoursWorked.HeaderText = "Hours Worked";
+            this.HoursWorked.Name = "HoursWorked";
+            // 
+            // Day2
+            // 
+            this.Day2.HeaderText = "Day";
+            this.Day2.Name = "Day2";
+            this.Day2.ReadOnly = true;
+            // 
+            // HoursWorked2
+            // 
+            this.HoursWorked2.HeaderText = "Hours Worked";
+            this.HoursWorked2.Name = "HoursWorked2";
+            // 
+            // btSave
+            // 
+            this.btSave.Location = new System.Drawing.Point(575, 546);
+            this.btSave.Name = "btSave";
+            this.btSave.Size = new System.Drawing.Size(64, 26);
+            this.btSave.TabIndex = 17;
+            this.btSave.Text = "Save";
+            this.btSave.UseVisualStyleBackColor = true;
+            // 
+            // labelInstructions
+            // 
+            this.labelInstructions.Location = new System.Drawing.Point(6, 319);
+            this.labelInstructions.Name = "labelInstructions";
+            this.labelInstructions.Size = new System.Drawing.Size(100, 229);
+            this.labelInstructions.TabIndex = 19;
+            this.labelInstructions.Text = resources.GetString("labelInstructions.Text");
+            // 
+            // btUpdate
+            // 
+            this.btUpdate.Location = new System.Drawing.Point(59, 250);
+            this.btUpdate.Name = "btUpdate";
+            this.btUpdate.Size = new System.Drawing.Size(75, 23);
+            this.btUpdate.TabIndex = 20;
+            this.btUpdate.Text = "Update";
+            this.btUpdate.UseVisualStyleBackColor = true;
+            // 
+            // Taxes
+            // 
+            this.Taxes.HeaderText = "Taxes";
+            this.Taxes.Name = "Taxes";
+            this.Taxes.ReadOnly = true;
+            this.Taxes.Width = 150;
+            // 
+            // Current
+            // 
+            this.Current.HeaderText = "Current";
+            this.Current.Name = "Current";
+            this.Current.ReadOnly = true;
+            this.Current.Width = 50;
             // 
             // EmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(650, 584);
-            this.Controls.Add(this.comboBoxTimeSheetYear);
-            this.Controls.Add(this.comboBoxTimeSheetMonth);
+            this.Controls.Add(this.btUpdate);
+            this.Controls.Add(this.labelInstructions);
+            this.Controls.Add(this.btSave);
+            this.Controls.Add(this.dataGridViewTimeSheet);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.labelSeparator);
             this.Controls.Add(this.textBoxPhone);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxLastName);
             this.Controls.Add(this.labelLastName);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.textBoxFirstName);
             this.Controls.Add(this.labelFirstName);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);
@@ -426,6 +465,7 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTotalPay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTimeSheet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,18 +492,24 @@
         private System.Windows.Forms.Label labelTax;
         private System.Windows.Forms.TextBox textBoxTotalPay;
         private System.Windows.Forms.Label labelTotalPay;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Taxes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Current;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label labelFirstName;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxFirstName;
+        private System.Windows.Forms.TextBox textBoxLastName;
         private System.Windows.Forms.Label labelLastName;
         private System.Windows.Forms.TextBox textBoxPhone;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelSeparator;
-        private System.Windows.Forms.ComboBox comboBoxTimeSheetYear;
-        private System.Windows.Forms.ComboBox comboBoxTimeSheetMonth;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView dataGridViewTimeSheet;
+        private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.Label labelInstructions;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Day;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HoursWorked;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Day2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn HoursWorked2;
+        private System.Windows.Forms.Button btUpdate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Taxes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Current;
     }
 }
