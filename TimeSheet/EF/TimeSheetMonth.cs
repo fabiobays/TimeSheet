@@ -32,5 +32,6 @@ namespace TimeSheet.EF
         public virtual ICollection<Payment> Payment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeSheet> TimeSheet { get; set; }
+
     }
 }
