@@ -26,11 +26,10 @@ namespace TimeSheet
             context = new ProjectEntities();
             InitializeComponent();
             this.ParentForm = parentForm;
-            this.Load += AdminForm_Load;
             this.FormClosed += AdminForm_FormClosed;
 
             // load emnploee email for combo box
-            loadComboBox();
+            loadEmailComboBoxex();
             loadEmployeeGridView();
             loadTimesheetGridView();
 
@@ -163,6 +162,10 @@ namespace TimeSheet
                 paymentToUpdate.cpp = cpp;
                 paymentToUpdate.net = net;
                 paymentToUpdate.tax = tax;
+
+                context.Payment.Attach(paymentToUpdate);
+                context.Entry(paymentToUpdate).Property(p => p.gross).IsModified = true;
+                context.SaveChanges();
             }
             else
             {
@@ -178,16 +181,51 @@ namespace TimeSheet
                     cpp = cpp,
                     tax = tax
                 };
+
+                context.Payment.Add(paymentToUpdate);
+                context.SaveChanges();
             }
             
             // save data 
             context.SaveChanges();
+
             // display detail
             displayDetail(selectedEmployee.Id, selectedTimeSheetMonth.Id);
+
+            // reset all selected button
+            resetTimesheetOptions();
+        }
+
+        private void resetTimesheetOptions()
+        {
+            loadEmailComboBoxex();
+            timeSheetGridView.DataSource = typeof(List<>);
+            timeSheetGridView.DataSource = null;
+            timeSheetGridView.Rows.Clear();
+            timeSheetGridView.Refresh();
+
+            monthCB.SelectedIndex = -1;
+            yearCB.SelectedIndex = -1;
+            timeSheetSelectEmployeeCB.SelectedIndex = -1;
+        }
+
+        private void resetDetailOptions()
+        {
+            dataGridViewTotalPay.Rows.Clear();
+            dataGridViewTotalPay.Refresh();
+            
+            dataGridViewTaxes.Rows.Clear();
+            dataGridViewTaxes.Refresh();
+            totalPayTB.Text = "";
+            taxexTB.Text = "";
+            netPayTB.Text = "";
+            paymentEmployeeNameTB.Text = "";
+            paymentMonthYearTB.Text = "";
         }
 
         private void displayDetail(int employeeId, int monthId)
         {
+            resetDetailOptions();
             var employee = context.Employee.FirstOrDefault(e => e.Id.Equals(employeeId));
             var timeSheetMonth = context.TimeSheetMonth.FirstOrDefault(p => p.Id == monthId);
             var payment = context.Payment.FirstOrDefault(p => p.employeeId.Equals(employeeId) && p.timesheetMonthId.Equals(monthId));
@@ -232,6 +270,7 @@ namespace TimeSheet
         {
             if (email == null || month == 0 || year ==0)
                 return;
+            timeSheetGridView.DataSource = typeof(List<>);
             // gets all timesheet list matching year, month and employee email
             var timeSheetList = (from timesheet in context.TimeSheet
                                     where timesheet.Employee.email.Equals(email)
@@ -243,7 +282,6 @@ namespace TimeSheet
                                         Day = timesheet.day,
                                         HoursWorked = timesheet.hoursWorked
                                     }).ToList();
-            timeSheetGridView.DataSource = typeof(List<>);
             timeSheetGridView.DataSource = timeSheetList.ToList();
         }
 
@@ -276,7 +314,7 @@ namespace TimeSheet
             loadEmployeeGridView();
         }
 
-        // if employee is selected, load month and year combobox
+        // if employee is selected, load month and year comboboxes
         private void TimeSheetSelectEmployeeCB_DropDownClosed(object sender, EventArgs e)
         {
             if (timeSheetSelectEmployeeCB.SelectedItem == null)
@@ -284,19 +322,21 @@ namespace TimeSheet
 
             string selectedEmail = timeSheetSelectEmployeeCB.SelectedItem.ToString();
             // load month and year combobox 
-            var selectedEmployee = context.Employee.First(se => se.email.Equals(selectedEmail));
-            var allTimesheet = (from timesheet in context.TimeSheet
-                               select timesheet).ToList();
-            
+            var selectedEmployee = context.Employee.FirstOrDefault(se => se.email.Equals(selectedEmail));
+
             var timesheetList= (from timesheet in context.TimeSheet
                                     where timesheet.employeeId == selectedEmployee.Id
                                     select timesheet).ToList();
 
+
+
             // clear combobox before adding items
             monthCB.Items.Clear();
             yearCB.Items.Clear();
+
             foreach (EF.TimeSheet t in timesheetList)
             {
+                Console.WriteLine(t.Employee.email + ", month: " + t.TimeSheetMonth.month + ", year: " + t.TimeSheetMonth.year);
                 if(!monthCB.Items.Contains(t.TimeSheetMonth.month))
                     monthCB.Items.Add(t.TimeSheetMonth.month);
                 if (!yearCB.Items.Contains(t.TimeSheetMonth.year))
@@ -305,7 +345,7 @@ namespace TimeSheet
         }
         
         // load employee in comboBox
-        private void loadComboBox()
+        private void loadEmailComboBoxex()
         {
             // reset comboboxes first
             timeSheetSelectEmployeeCB.Items.Clear();
@@ -362,28 +402,9 @@ namespace TimeSheet
                 MessageBox.Show("Please enter valid input");
             }
             loadEmployeeGridView();
-            loadComboBox();
+            loadEmailComboBoxex();
         }
-
-        private void AdminForm_Load(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void yearCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+        
         
         private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
         {

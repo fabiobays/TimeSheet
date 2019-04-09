@@ -380,7 +380,6 @@
             this.label2.Size = new System.Drawing.Size(43, 20);
             this.label2.TabIndex = 34;
             this.label2.Text = "Year";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // yearCB
             // 
@@ -389,7 +388,6 @@
             this.yearCB.Name = "yearCB";
             this.yearCB.Size = new System.Drawing.Size(100, 28);
             this.yearCB.TabIndex = 33;
-            this.yearCB.SelectedIndexChanged += new System.EventHandler(this.yearCB_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -401,7 +399,6 @@
             this.label1.Size = new System.Drawing.Size(54, 20);
             this.label1.TabIndex = 32;
             this.label1.Text = "Month";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // monthCB
             // 
@@ -723,7 +720,6 @@
             this.Controls.Add(this.EmployeeGridView);
             this.Name = "AdminForm";
             this.Text = "AdminForm";
-            this.Load += new System.EventHandler(this.AdminForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.EmployeeGridView)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
