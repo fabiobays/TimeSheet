@@ -17,59 +17,56 @@ namespace TimeSheet
     {
         // private data context field 
         private ProjectEntities context;
-        private int employeeId = 1;
+        private Form ParentForm;
+        // get current datetime 
+        DateTime dt = DateTime.Now;
 
-        public AdminForm()
+        public AdminForm(Form parentForm)
         {
             context = new ProjectEntities();
-
             InitializeComponent();
+            this.ParentForm = parentForm;
+            this.Load += AdminForm_Load;
+            this.FormClosed += AdminForm_FormClosed;
 
-            // test insert database 
-            insertData();
             // load emnploee email for combo box
             loadComboBox();
             loadEmployeeGridView();
             loadTimesheetGridView();
-            // register creating Emplyoee button 
+
+            // register button events
             registerEmployeeBtn.Click += RegisterEmployeeBtn_Click;
-            // register update houly rate
             setHourBtn.Click += SetHourBtn_Click;
+            acceptTimesheetBtn.Click += AcceptTimesheetBtn_Click;
+            declineBtn.Click += DeclineBtn_Click;
+
             // register timesheet select employee combobox
             timeSheetSelectEmployeeCB.DropDownClosed += TimeSheetSelectEmployeeCB_DropDownClosed;
-            // register accept button 
-            acceptTimesheetBtn.Click += AcceptTimesheetBtn_Click;
             monthCB.DropDownClosed += MonthCB_DropDownClosed;
             yearCB.DropDownClosed += YearCB_DropDownClosed;
+            
         }
 
-        
-
-        private void insertData()
+        private void DeclineBtn_Click(object sender, EventArgs e)
         {
+            string email = timeSheetSelectEmployeeCB.SelectedItem.ToString();
+            // get timesheet table 
+            //get timesheetmonth id
+            int year, month;
+            int.TryParse(yearCB.SelectedItem.ToString(), out year);
+            int.TryParse(monthCB.SelectedItem.ToString(), out month);
 
-            // insert month list
-            List<TimeSheetMonth> monthList = new List<TimeSheetMonth>()  {
-                new TimeSheetMonth { employeeId = employeeId, month = 1, year = 2019, totalHours = 0 }
-            };
-
-            context.TimeSheetMonth.AddRange(monthList);
+            var timesheetMonth = context.TimeSheetMonth.FirstOrDefault(tm => tm.month.Equals(month) && tm.year.Equals(year));
+            var timesheetList = context.TimeSheet.Where(ts => ts.timesheetMonthId.Equals(timesheetMonth.Id)).ToList();
+            foreach(EF.TimeSheet ts in timesheetList)
+            {
+                context.TimeSheet.Remove(ts);
+            }
             context.SaveChanges();
-
-            // insert timesheet
-            var testMonth = (from myMonth in context.TimeSheetMonth
-                             select myMonth).ToList();
-            List<EF.TimeSheet> timeSheetList = new List<EF.TimeSheet>()  {
-                new EF.TimeSheet { employeeId = employeeId, TimeSheetMonth = testMonth[0], day = 7, hoursWorked = 8 },
-                new EF.TimeSheet { employeeId = employeeId, TimeSheetMonth = testMonth[0], day = 9, hoursWorked = 8 },
-                new EF.TimeSheet { employeeId = employeeId, TimeSheetMonth = testMonth[0], day = 10, hoursWorked = 8 },
-                new EF.TimeSheet { employeeId = employeeId, TimeSheetMonth = testMonth[0], day = 14, hoursWorked = 8 },
-                new EF.TimeSheet { employeeId = employeeId, TimeSheetMonth = testMonth[0], day = 20, hoursWorked = 8 }
-            };
-
-            context.TimeSheet.AddRange(timeSheetList);
-            context.SaveChanges();
+            MessageBox.Show("The timesheet approval is declined");
+            loadTimesheetGridView(email, month, year);
         }
+        
         private void YearCB_DropDownClosed(object sender, EventArgs e)
         {
             string email = timeSheetSelectEmployeeCB.SelectedItem.ToString();
@@ -96,58 +93,140 @@ namespace TimeSheet
 
         private void AcceptTimesheetBtn_Click(object sender, EventArgs e)
         {
-            // get Emploee from selected value (email) in comboBox
-            string selectedEmail = timeSheetSelectEmployeeCB.SelectedItem.ToString();
+            // get current month and year
+            int currentMonth = dt.Month;
+            int currentYear = dt.Year;
+            
+            // get an Employee from selected value (email) in comboBox
+           
             int year, month;
-            int.TryParse(yearCB.SelectedItem.ToString(), out year);
-            int.TryParse(monthCB.SelectedItem.ToString(), out month);
+            if (!int.TryParse(yearCB.SelectedItem.ToString(), out year) ||
+                !int.TryParse(monthCB.SelectedItem.ToString(), out month) || 
+                yearCB.SelectedItem == null || monthCB.SelectedItem == null ||
+                timeSheetSelectEmployeeCB.SelectedItem == null)
+            {
+                MessageBox.Show("Please select valid month and year");
+                return;
+            }
+
+            string selectedEmail = timeSheetSelectEmployeeCB.SelectedItem.ToString();
+            // check if admin tries to submit current month (only previous month can be submitted)
+            if (currentMonth == month && currentYear == year)
+            {
+                MessageBox.Show("Cannot accept current month's timesheet");
+                return;
+            }
+
+            // Get Employee
             var selectedEmployee = context.Employee.First(se => se.email.Equals(selectedEmail));
-            var selectedTimeSheetMonth = context.TimeSheetMonth.First(m => m.year.Equals(year) && m.month.Equals(month));
-            int id = selectedTimeSheetMonth.Id;
-            var paymentToUpdate = context.Payment.FirstOrDefault(p => p.employeeId.Equals(selectedEmployee.Id) 
-                                                        && p.timesheetMonthId.Equals(selectedTimeSheetMonth.Id));
+            // get employee's timesheetMonth
+            var selectedTimeSheetMonth = context.TimeSheetMonth
+                            .First(m => m.year.Equals(year) 
+                                    && m.month.Equals(month)
+                                    && m.employeeId.Equals(selectedEmployee.Id));
+            // get payment
+            var paymentToUpdate = context.Payment
+                            .FirstOrDefault(p => p.employeeId.Equals(selectedEmployee.Id) 
+                                               && p.timesheetMonthId.Equals(selectedTimeSheetMonth.Id));
+
+            // calculate grosspay (hourly rate * workedHours)
+            decimal currentGrossPay = 0;
+            var timesheetList = (from timesheet in context.TimeSheet
+                                where timesheet.employeeId.Equals(selectedEmployee.Id)
+                                    && timesheet.timesheetMonthId.Equals(selectedTimeSheetMonth.Id)
+                                select timesheet).ToList();
+
+            foreach(EF.TimeSheet t in timesheetList)
+            {
+                currentGrossPay += t.hoursWorked * selectedEmployee.hourlyRate ?? 1;
+            }
+
+            decimal gross = paymentToUpdate == null ? 0 : paymentToUpdate.gross;
+            gross += currentGrossPay;
+            decimal tax = CalculateIncomeProvinceTax(gross);
+            decimal ei = CalculateEI(gross);
+            decimal cpp = CalculateCPP(gross);
+            decimal net = gross - (tax + ei + cpp);
+
+            // update payment 
             if (paymentToUpdate != null)
             {
-                // TODO: update payment 
-                MessageBox.Show("should be updated!");
+                paymentToUpdate.gross = gross;
+                paymentToUpdate.ei = ei;
+                paymentToUpdate.cpp = cpp;
+                paymentToUpdate.net = net;
+                paymentToUpdate.tax = tax;
             }
             else
             {
                 // create payment table 
                 paymentToUpdate = new Payment
                 {
-                   // TODO: the logic for creating payment should be added
                     employeeId = selectedEmployee.Id,
                     timesheetMonthId = selectedTimeSheetMonth.Id,
-                    hourlyRate = selectedEmployee.hourlyRate ?? 0, // check null value, hourly rate in payment is not null
-                    gross = 0,
-                    ei = 0,
-                    net = 0,
-                    tax = 0
+                    hourlyRate = selectedEmployee.hourlyRate ?? 1, // check null value, hourly rate in payment is not null
+                    gross = gross,
+                    ei = ei,
+                    net = net,
+                    cpp = cpp,
+                    tax = tax
                 };
             }
+            
+            // save data 
             context.SaveChanges();
-            paymentGridView.DataSource = context.Payment.Local.ToBindingList();
+            // display detail
+            displayDetail(selectedEmployee.Id, selectedTimeSheetMonth.Id);
         }
-        
+
+        private void displayDetail(int employeeId, int monthId)
+        {
+            var employee = context.Employee.FirstOrDefault(e => e.Id.Equals(employeeId));
+            var timeSheetMonth = context.TimeSheetMonth.FirstOrDefault(p => p.Id == monthId);
+            var payment = context.Payment.FirstOrDefault(p => p.employeeId.Equals(employeeId) && p.timesheetMonthId.Equals(monthId));
+            if (payment != null)
+            {
+                object[] regularPay = { "Regular Pay", timeSheetMonth.totalHours, payment.hourlyRate, payment.gross };
+                dataGridViewTotalPay.Rows.Add(regularPay);
+
+                object[] tax = { "Income Tax", payment.tax };
+                dataGridViewTaxes.Rows.Add(tax);
+
+                object[] ei = { "Employment Insurance", payment.ei };
+                dataGridViewTaxes.Rows.Add(ei);
+
+                object[] cpp = { "Canada Pension Plan", payment.cpp };
+                dataGridViewTaxes.Rows.Add(cpp);
+
+                dataGridViewTotalPay.Refresh();
+                dataGridViewTaxes.Refresh();
+
+                var taxes = payment.tax + payment.ei + payment.cpp;
+
+                totalPayTB.Text = payment.gross.ToString("C2");
+                taxexTB.Text = taxes.ToString("C2");
+                netPayTB.Text = payment.net.ToString("C2");
+                paymentEmployeeNameTB.Text = employee.firstName + " " + employee.lastName;
+                paymentMonthYearTB.Text = timeSheetMonth.month + " / " + timeSheetMonth.year;
+            }
+
+        }
         private void loadEmployeeGridView()
         {
-            var employeList = from employee in context.Employee
-                             select employee;
-           foreach(Employee e in employeList)
-           {
-               Console.WriteLine(e.email + " " + e.firstName);
-           }
+            var employeList = (from employee in context.Employee
+                             select employee).ToList();
+            // update gridview 
+            EmployeeGridView.DataSource = typeof(List<Employee>);
             EmployeeGridView.DataSource = context.Employee.Local.ToBindingList();
         }
-        // Display Employee Gridview
+
+        // Display Employee Timesheet Gridview
         private void loadTimesheetGridView(string email = null, int month = 0, int year = 0)
         {
             if (email == null || month == 0 || year ==0)
                 return;
-
             // gets all timesheet list matching year, month and employee email
-            var timeSheetList = from timesheet in context.TimeSheet
+            var timeSheetList = (from timesheet in context.TimeSheet
                                     where timesheet.Employee.email.Equals(email)
                                     && timesheet.TimeSheetMonth.month.Equals(month)
                                     && timesheet.TimeSheetMonth.year.Equals(year)
@@ -156,7 +235,8 @@ namespace TimeSheet
                                         Month = timesheet.TimeSheetMonth.month,
                                         Day = timesheet.day,
                                         HoursWorked = timesheet.hoursWorked
-                                    };
+                                    }).ToList();
+            timeSheetGridView.DataSource = typeof(List<>);
             timeSheetGridView.DataSource = timeSheetList.ToList();
         }
 
@@ -170,31 +250,45 @@ namespace TimeSheet
             if(Decimal.TryParse(houlyRateUpdateTxt.Text, out newRate))
             {
                 var employeeToUpdate = context.Employee.SingleOrDefault(ue => ue.email == email);
+                Console.WriteLine(employeeToUpdate.email);
                 if (employeeToUpdate != null)
                 {
                     employeeToUpdate.hourlyRate = newRate;
+                   
+                    context.Employee.Attach(employeeToUpdate);
+                    context.Entry(employeeToUpdate).Property(ue => ue.hourlyRate).IsModified = true;
                     context.SaveChanges();
-                    MessageBox.Show("email :" + email + " new rate: " + newRate + " successfully saved!");
+                    MessageBox.Show("New hourly rate successfully saved!");
                 } 
             }
             else
             {
                 MessageBox.Show("Please enter valid input");
             }
+            var updatedEmployee = context.Employee.SingleOrDefault(ue => ue.email == email);
             loadEmployeeGridView();
         }
 
         // if employee is selected, load month and year combobox
         private void TimeSheetSelectEmployeeCB_DropDownClosed(object sender, EventArgs e)
         {
-            MessageBox.Show("selected item = " + timeSheetSelectEmployeeCB.SelectedItem);
+            if (timeSheetSelectEmployeeCB.SelectedItem == null)
+                return;
+
             string selectedEmail = timeSheetSelectEmployeeCB.SelectedItem.ToString();
             // load month and year combobox 
             var selectedEmployee = context.Employee.First(se => se.email.Equals(selectedEmail));
-            var timesheetList= from timesheet in context.TimeSheet
+            var allTimesheet = (from timesheet in context.TimeSheet
+                               select timesheet).ToList();
+            
+            var timesheetList= (from timesheet in context.TimeSheet
                                     where timesheet.employeeId == selectedEmployee.Id
-                                    select timesheet;
-            foreach(EF.TimeSheet t in timesheetList)
+                                    select timesheet).ToList();
+
+            // clear combobox before adding items
+            monthCB.Items.Clear();
+            yearCB.Items.Clear();
+            foreach (EF.TimeSheet t in timesheetList)
             {
                 if(!monthCB.Items.Contains(t.TimeSheetMonth.month))
                     monthCB.Items.Add(t.TimeSheetMonth.month);
@@ -202,11 +296,14 @@ namespace TimeSheet
                     yearCB.Items.Add(t.TimeSheetMonth.year);
             }
         }
-
         
         // load employee in comboBox
         private void loadComboBox()
         {
+            // reset comboboxes first
+            timeSheetSelectEmployeeCB.Items.Clear();
+            setEmployeeHourCB.Items.Clear();
+
             // get employee email list then display in combo box
             var employeeEmailList = (from employee in context.Employee
                                      select new
@@ -257,11 +354,13 @@ namespace TimeSheet
             {
                 MessageBox.Show("Please enter valid input");
             }
+            loadEmployeeGridView();
+            loadComboBox();
         }
 
         private void AdminForm_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -277,6 +376,11 @@ namespace TimeSheet
         private void yearCB_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+        
+        private void AdminForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ParentForm.Show();
         }
 
         private decimal CalculateIncomeProvinceTax(decimal grossPay)

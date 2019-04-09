@@ -52,7 +52,7 @@ namespace TimeSheet
         {
             //Application.Run(new AdminForm());
             this.Hide();
-            new AdminForm().Show();
+            new AdminForm(this).Show();
         }
 
         private void loadEmployeeComboBox()

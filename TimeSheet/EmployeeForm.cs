@@ -234,7 +234,7 @@ namespace TimeSheet
                 new TimeSheetMonth { employeeId = 1, month = 3, totalHours = 84, year = 2019 },
                 new TimeSheetMonth { employeeId = 2, month = 3, totalHours = 168, year = 2019 },
                 new TimeSheetMonth { employeeId = 3, month = 3, totalHours = 84, year = 2019 },
-                 new TimeSheetMonth { employeeId = 1, month = 4, totalHours = 40, year = 2019 },
+                new TimeSheetMonth { employeeId = 1, month = 4, totalHours = 40, year = 2019 },
 
             };
 

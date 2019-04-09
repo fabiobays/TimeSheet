@@ -43,6 +43,8 @@
             this.labelTaxes = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridViewTaxes = new System.Windows.Forms.DataGridView();
+            this.Taxes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Current = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTotalPay = new System.Windows.Forms.DataGridView();
             this.Pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,8 +67,6 @@
             this.btSave = new System.Windows.Forms.Button();
             this.labelInstructions = new System.Windows.Forms.Label();
             this.btUpdate = new System.Windows.Forms.Button();
-            this.Taxes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Current = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).BeginInit();
@@ -241,6 +241,20 @@
             this.dataGridViewTaxes.ReadOnly = true;
             this.dataGridViewTaxes.Size = new System.Drawing.Size(244, 105);
             this.dataGridViewTaxes.TabIndex = 1;
+            // 
+            // Taxes
+            // 
+            this.Taxes.HeaderText = "Taxes";
+            this.Taxes.Name = "Taxes";
+            this.Taxes.ReadOnly = true;
+            this.Taxes.Width = 150;
+            // 
+            // Current
+            // 
+            this.Current.HeaderText = "Current";
+            this.Current.Name = "Current";
+            this.Current.ReadOnly = true;
+            this.Current.Width = 50;
             // 
             // dataGridViewTotalPay
             // 
@@ -420,20 +434,6 @@
             this.btUpdate.TabIndex = 20;
             this.btUpdate.Text = "Update";
             this.btUpdate.UseVisualStyleBackColor = true;
-            // 
-            // Taxes
-            // 
-            this.Taxes.HeaderText = "Taxes";
-            this.Taxes.Name = "Taxes";
-            this.Taxes.ReadOnly = true;
-            this.Taxes.Width = 150;
-            // 
-            // Current
-            // 
-            this.Current.HeaderText = "Current";
-            this.Current.Name = "Current";
-            this.Current.ReadOnly = true;
-            this.Current.Width = 50;
             // 
             // EmployeeForm
             // 
