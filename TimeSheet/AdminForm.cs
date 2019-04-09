@@ -278,5 +278,53 @@ namespace TimeSheet
         {
 
         }
+
+        private decimal CalculateIncomeProvinceTax(decimal grossPay)
+        {
+
+            var anualIncome = grossPay * 12;
+            if (anualIncome <= 10682)
+                return 0;
+            else if (anualIncome <= 40707)
+                return anualIncome * 0.0506M;
+            else if (anualIncome <= 81416)
+                return anualIncome * 0.0770M;
+            else if (anualIncome <= 93476)
+                return grossPay * 0.105M;
+            else if (anualIncome <= 113506)
+                return grossPay * 0.1229M;
+            else if (anualIncome <= 153900)
+                return grossPay * 0.1470M;
+            else
+                return grossPay * 0.1680M;
+        }
+
+        private decimal CalculateIncomeFederalTax(decimal grossPay)
+        {
+
+            var anualIncome = grossPay * 12;
+            if (anualIncome <= 12069)
+                return 0;
+            else if (anualIncome <= 47630)
+                return anualIncome * 0.15M;
+            else if (anualIncome <= 95259)
+                return anualIncome * 0.205M;
+            else if (anualIncome <= 147667)
+                return grossPay * 0.26M;
+            else if (anualIncome <= 210371)
+                return grossPay * 0.29M;
+            else
+                return grossPay * 0.33M;
+        }
+
+        private decimal CalculateCPP(decimal grossPay)
+        {
+            return (grossPay - 291.66M) * 0.0495M;
+        }
+
+        private decimal CalculateEI(decimal grossPay)
+        {
+            return (grossPay * 0.0163M);
+        }
     }
 }
