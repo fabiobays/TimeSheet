@@ -30,10 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -67,14 +64,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.timeSheetSelectEmployeeCB = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.dataGridViewTotalPay = new System.Windows.Forms.DataGridView();
-            this.Pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTaxes = new System.Windows.Forms.DataGridView();
+            this.paymentMonthYearTB = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.paymentEmployeeNameTB = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.netPayTB = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -82,12 +75,16 @@
             this.labelTax = new System.Windows.Forms.Label();
             this.totalPayTB = new System.Windows.Forms.TextBox();
             this.labelTotalPay = new System.Windows.Forms.Label();
-            this.paymentEmployeeNameTB = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.paymentMonthYearTB = new System.Windows.Forms.TextBox();
+            this.dataGridViewTaxes = new System.Windows.Forms.DataGridView();
             this.Taxes = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Current = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTotalPay = new System.Windows.Forms.DataGridView();
+            this.Pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Hours = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.goBackBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.EmployeeGridView)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -95,9 +92,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.timeSheetGridView)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTotalPay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).BeginInit();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTotalPay)).BeginInit();
             this.SuspendLayout();
             // 
             // label5
@@ -331,22 +328,13 @@
             // timeSheetGridView
             // 
             this.timeSheetGridView.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.timeSheetGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.timeSheetGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.timeSheetGridView.Location = new System.Drawing.Point(31, 129);
             this.timeSheetGridView.Name = "timeSheetGridView";
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Transparent;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.timeSheetGridView.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.timeSheetGridView.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.timeSheetGridView.Size = new System.Drawing.Size(406, 148);
             this.timeSheetGridView.TabIndex = 29;
             // 
@@ -469,104 +457,45 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Payment Detail";
             // 
-            // label4
+            // paymentMonthYearTB
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(49, 43);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(125, 20);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "Employee Name";
+            this.paymentMonthYearTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.paymentMonthYearTB.Location = new System.Drawing.Point(473, 41);
+            this.paymentMonthYearTB.Name = "paymentMonthYearTB";
+            this.paymentMonthYearTB.ReadOnly = true;
+            this.paymentMonthYearTB.Size = new System.Drawing.Size(164, 26);
+            this.paymentMonthYearTB.TabIndex = 37;
             // 
-            // label18
+            // label16
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.White;
-            this.label18.Location = new System.Drawing.Point(49, 76);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(74, 20);
-            this.label18.TabIndex = 31;
-            this.label18.Text = "Total Pay";
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.White;
+            this.label16.Location = new System.Drawing.Point(364, 43);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(92, 20);
+            this.label16.TabIndex = 36;
+            this.label16.Text = "Month/Year";
             // 
-            // dataGridViewTotalPay
+            // label15
             // 
-            this.dataGridViewTotalPay.AllowUserToAddRows = false;
-            this.dataGridViewTotalPay.AllowUserToDeleteRows = false;
-            this.dataGridViewTotalPay.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTotalPay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridViewTotalPay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewTotalPay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Pay,
-            this.Hours,
-            this.Rate,
-            this.Total});
-            this.dataGridViewTotalPay.Location = new System.Drawing.Point(53, 99);
-            this.dataGridViewTotalPay.Name = "dataGridViewTotalPay";
-            this.dataGridViewTotalPay.ReadOnly = true;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            this.dataGridViewTotalPay.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewTotalPay.Size = new System.Drawing.Size(442, 92);
-            this.dataGridViewTotalPay.TabIndex = 32;
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.White;
+            this.label15.Location = new System.Drawing.Point(49, 203);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(51, 20);
+            this.label15.TabIndex = 35;
+            this.label15.Text = "Taxes";
             // 
-            // Pay
+            // paymentEmployeeNameTB
             // 
-            this.Pay.HeaderText = "Pay";
-            this.Pay.Name = "Pay";
-            this.Pay.ReadOnly = true;
-            // 
-            // Hours
-            // 
-            this.Hours.HeaderText = "Hours";
-            this.Hours.Name = "Hours";
-            this.Hours.ReadOnly = true;
-            // 
-            // Rate
-            // 
-            this.Rate.HeaderText = "Rate";
-            this.Rate.Name = "Rate";
-            this.Rate.ReadOnly = true;
-            // 
-            // Total
-            // 
-            this.Total.HeaderText = "Total";
-            this.Total.Name = "Total";
-            this.Total.ReadOnly = true;
-            // 
-            // dataGridViewTaxes
-            // 
-            this.dataGridViewTaxes.AllowUserToAddRows = false;
-            this.dataGridViewTaxes.AllowUserToDeleteRows = false;
-            this.dataGridViewTaxes.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTaxes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewTaxes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Taxes,
-            this.Current});
-            this.dataGridViewTaxes.Location = new System.Drawing.Point(53, 226);
-            this.dataGridViewTaxes.Name = "dataGridViewTaxes";
-            this.dataGridViewTaxes.ReadOnly = true;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            this.dataGridViewTaxes.RowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewTaxes.Size = new System.Drawing.Size(316, 105);
-            this.dataGridViewTaxes.TabIndex = 33;
+            this.paymentEmployeeNameTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.paymentEmployeeNameTB.Location = new System.Drawing.Point(192, 41);
+            this.paymentEmployeeNameTB.Name = "paymentEmployeeNameTB";
+            this.paymentEmployeeNameTB.ReadOnly = true;
+            this.paymentEmployeeNameTB.Size = new System.Drawing.Size(146, 26);
+            this.paymentEmployeeNameTB.TabIndex = 6;
             // 
             // groupBox5
             // 
@@ -638,45 +567,23 @@
             this.labelTotalPay.TabIndex = 0;
             this.labelTotalPay.Text = "Total Pay:";
             // 
-            // paymentEmployeeNameTB
+            // dataGridViewTaxes
             // 
-            this.paymentEmployeeNameTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.paymentEmployeeNameTB.Location = new System.Drawing.Point(192, 41);
-            this.paymentEmployeeNameTB.Name = "paymentEmployeeNameTB";
-            this.paymentEmployeeNameTB.ReadOnly = true;
-            this.paymentEmployeeNameTB.Size = new System.Drawing.Size(146, 26);
-            this.paymentEmployeeNameTB.TabIndex = 6;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(49, 203);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(51, 20);
-            this.label15.TabIndex = 35;
-            this.label15.Text = "Taxes";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.White;
-            this.label16.Location = new System.Drawing.Point(364, 43);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(92, 20);
-            this.label16.TabIndex = 36;
-            this.label16.Text = "Month/Year";
-            // 
-            // paymentMonthYearTB
-            // 
-            this.paymentMonthYearTB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.paymentMonthYearTB.Location = new System.Drawing.Point(473, 41);
-            this.paymentMonthYearTB.Name = "paymentMonthYearTB";
-            this.paymentMonthYearTB.ReadOnly = true;
-            this.paymentMonthYearTB.Size = new System.Drawing.Size(164, 26);
-            this.paymentMonthYearTB.TabIndex = 37;
+            this.dataGridViewTaxes.AllowUserToAddRows = false;
+            this.dataGridViewTaxes.AllowUserToDeleteRows = false;
+            this.dataGridViewTaxes.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewTaxes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Taxes,
+            this.Current});
+            this.dataGridViewTaxes.Location = new System.Drawing.Point(53, 226);
+            this.dataGridViewTaxes.Name = "dataGridViewTaxes";
+            this.dataGridViewTaxes.ReadOnly = true;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            this.dataGridViewTaxes.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewTaxes.Size = new System.Drawing.Size(316, 105);
+            this.dataGridViewTaxes.TabIndex = 33;
+            
             // 
             // Taxes
             // 
@@ -691,7 +598,73 @@
             this.Current.HeaderText = "Current";
             this.Current.Name = "Current";
             this.Current.ReadOnly = true;
-            this.Current.Width = 87;
+            this.Current.Width = 94;
+            // 
+            // dataGridViewTotalPay
+            // 
+            this.dataGridViewTotalPay.AllowUserToAddRows = false;
+            this.dataGridViewTotalPay.AllowUserToDeleteRows = false;
+            this.dataGridViewTotalPay.BackgroundColor = System.Drawing.Color.White;
+            this.dataGridViewTotalPay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTotalPay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Pay,
+            this.Hours,
+            this.Rate,
+            this.Total});
+            this.dataGridViewTotalPay.Location = new System.Drawing.Point(53, 99);
+            this.dataGridViewTotalPay.Name = "dataGridViewTotalPay";
+            this.dataGridViewTotalPay.ReadOnly = true;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            this.dataGridViewTotalPay.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTotalPay.Size = new System.Drawing.Size(442, 92);
+            this.dataGridViewTotalPay.TabIndex = 32;
+            // 
+            // Pay
+            // 
+            this.Pay.HeaderText = "Pay";
+            this.Pay.Name = "Pay";
+            this.Pay.ReadOnly = true;
+            // 
+            // Hours
+            // 
+            this.Hours.HeaderText = "Hours";
+            this.Hours.Name = "Hours";
+            this.Hours.ReadOnly = true;
+            // 
+            // Rate
+            // 
+            this.Rate.HeaderText = "Rate";
+            this.Rate.Name = "Rate";
+            this.Rate.ReadOnly = true;
+            // 
+            // Total
+            // 
+            this.Total.HeaderText = "Total";
+            this.Total.Name = "Total";
+            this.Total.ReadOnly = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.White;
+            this.label18.Location = new System.Drawing.Point(49, 76);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(74, 20);
+            this.label18.TabIndex = 31;
+            this.label18.Text = "Total Pay";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(49, 43);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(125, 20);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Employee Name";
             // 
             // goBackBtn
             // 
@@ -730,10 +703,10 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTotalPay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTaxes)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTotalPay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -207,16 +207,12 @@ namespace TimeSheet
         }
 
         private void EmployeeForm_Load(object sender, EventArgs e)
-        {
-            MockData();
+        {     
             LoadPersonalInfo();
             //Initialize the datagridview for the timesheet of the current month
             InitializeTimeSheet();
             LoadComboBox();
             LoadTimeSheet();
-
-
-
         }
 
         private void LoadPersonalInfo()
@@ -234,145 +230,7 @@ namespace TimeSheet
             }
         }
 
-        private void MockData()
-        {
-            List<TimeSheetMonth> tsm = new List<TimeSheetMonth>()
-            {
-                new TimeSheetMonth { employeeId = 1, month = 3, totalHours = 84, year = 2019 },
-                new TimeSheetMonth { employeeId = 2, month = 3, totalHours = 168, year = 2019 },
-                new TimeSheetMonth { employeeId = 3, month = 3, totalHours = 84, year = 2019 },
-                new TimeSheetMonth { employeeId = 1, month = 4, totalHours = 40, year = 2019 },
-
-            };
-
-            context.TimeSheetMonth.AddRange(tsm);
-            context.SaveChanges();
-
-            List<EF.TimeSheet> ts = new List<EF.TimeSheet>()
-            {
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 1 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 2 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 3 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 4 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 5 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 6 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 7 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 8 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 9 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 10 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 11 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 12 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 13 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 14 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 15 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 16 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 17 },                
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 18 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 19 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 20 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 21 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 22 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 23 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 24},
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 25 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 26 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 27 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 28 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 4 , day = 29 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 30 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 1, hoursWorked = 0 , day = 31 },
-
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 1 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 2 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 3 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 4 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 5 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 6 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 7 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 8 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 9 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 10 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 11 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 12 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 13 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 14 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 15 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 16 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 17 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 18 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 19 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 20 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 21 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 22 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 23 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 24 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 25 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 26 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 27 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 28 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 8 , day = 29 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 30 },
-                new EF.TimeSheet { employeeId = 2, timesheetMonthId = 2, hoursWorked = 0 , day = 31 },
-
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 1 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 2 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 3 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 4 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 5 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 6 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 7 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 8 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 9 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 10 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 11 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 12 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 13 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 14 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 15 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 16 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 17 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 18 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 19 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 20 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 21 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 22 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 23 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 24 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 25 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 26 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 27 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 28 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 4 , day = 29 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 30 },
-                new EF.TimeSheet { employeeId = 3, timesheetMonthId = 3, hoursWorked = 0 , day = 31 },
-
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 1 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 2 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 3 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 4 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 5 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 0 , day = 6 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 0 , day = 7 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 8 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 9 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 10 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 11 },
-                new EF.TimeSheet { employeeId = 1, timesheetMonthId = 4, hoursWorked = 4 , day = 12 },
-            };
-
-            context.TimeSheet.AddRange(ts);
-            context.SaveChanges();
-
-            List<Payment> payments = new List<Payment>()
-            {
-
-                new Payment {employeeId = 1, timesheetMonthId = 1, gross = 2940, tax = 589.76M, ei = 47.92M, cpp = 131.09M, net = 2117.23M, hourlyRate = 35 }
-            };
-
-            context.Payment.AddRange(payments);
-            //The other two finished timesheets must have been approved by the admin!!
-            context.SaveChanges();
-        }
+       
 
         private void InitializeTimeSheet(int m = 0, int y = 0)
         {

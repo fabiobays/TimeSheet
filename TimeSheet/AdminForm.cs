@@ -130,62 +130,37 @@ namespace TimeSheet
                             .First(m => m.year.Equals(year) 
                                     && m.month.Equals(month)
                                     && m.employeeId.Equals(selectedEmployee.Id));
-            // get payment
-            var paymentToUpdate = context.Payment
-                            .FirstOrDefault(p => p.employeeId.Equals(selectedEmployee.Id) 
-                                               && p.timesheetMonthId.Equals(selectedTimeSheetMonth.Id));
+
 
             // calculate grosspay (hourly rate * workedHours)
-            decimal currentGrossPay = 0;
+            decimal currentGrossPay = selectedTimeSheetMonth.totalHours  * selectedEmployee.hourlyRate ?? 0;
             var timesheetList = (from timesheet in context.TimeSheet
                                 where timesheet.employeeId.Equals(selectedEmployee.Id)
                                     && timesheet.timesheetMonthId.Equals(selectedTimeSheetMonth.Id)
                                 select timesheet).ToList();
 
-            foreach(EF.TimeSheet t in timesheetList)
+           
+           
+            decimal tax = CalculateIncomeProvinceTax(currentGrossPay) + CalculateIncomeFederalTax(currentGrossPay);
+            decimal ei = CalculateEI(currentGrossPay);
+            decimal cpp = CalculateCPP(currentGrossPay);
+            decimal net = currentGrossPay - (tax + ei + cpp);
+
+            // create payment table 
+            var payment = new Payment
             {
-                currentGrossPay += t.hoursWorked * selectedEmployee.hourlyRate ?? 1;
-            }
+                employeeId = selectedEmployee.Id,
+                timesheetMonthId = selectedTimeSheetMonth.Id,
+                hourlyRate = selectedEmployee.hourlyRate ?? 0, // check null value, hourly rate in payment is not null
+                gross = currentGrossPay,
+                ei = ei,
+                net = net,
+                cpp = cpp,
+                tax = tax
+            };
 
-            decimal gross = paymentToUpdate == null ? 0 : paymentToUpdate.gross;
-            gross += currentGrossPay;
-            decimal tax = CalculateIncomeProvinceTax(gross);
-            decimal ei = CalculateEI(gross);
-            decimal cpp = CalculateCPP(gross);
-            decimal net = gross - (tax + ei + cpp);
-
-            // update payment 
-            if (paymentToUpdate != null)
-            {
-                paymentToUpdate.gross = gross;
-                paymentToUpdate.ei = ei;
-                paymentToUpdate.cpp = cpp;
-                paymentToUpdate.net = net;
-                paymentToUpdate.tax = tax;
-
-                context.Payment.Attach(paymentToUpdate);
-                context.Entry(paymentToUpdate).Property(p => p.gross).IsModified = true;
-                context.SaveChanges();
-            }
-            else
-            {
-                // create payment table 
-                paymentToUpdate = new Payment
-                {
-                    employeeId = selectedEmployee.Id,
-                    timesheetMonthId = selectedTimeSheetMonth.Id,
-                    hourlyRate = selectedEmployee.hourlyRate ?? 1, // check null value, hourly rate in payment is not null
-                    gross = gross,
-                    ei = ei,
-                    net = net,
-                    cpp = cpp,
-                    tax = tax
-                };
-
-                context.Payment.Add(paymentToUpdate);
-                context.SaveChanges();
-            }
-            
+            context.Payment.Add(payment);
+       
             // save data 
             context.SaveChanges();
 
@@ -231,16 +206,16 @@ namespace TimeSheet
             var payment = context.Payment.FirstOrDefault(p => p.employeeId.Equals(employeeId) && p.timesheetMonthId.Equals(monthId));
             if (payment != null)
             {
-                object[] regularPay = { "Regular Pay", timeSheetMonth.totalHours, payment.hourlyRate, payment.gross };
+                object[] regularPay = { "Regular Pay", timeSheetMonth.totalHours, payment.hourlyRate, payment.gross.ToString("C2") };
                 dataGridViewTotalPay.Rows.Add(regularPay);
 
-                object[] tax = { "Income Tax", payment.tax };
+                object[] tax = { "Income Tax", payment.tax.ToString("C2") };
                 dataGridViewTaxes.Rows.Add(tax);
 
-                object[] ei = { "Employment Insurance", payment.ei };
+                object[] ei = { "Employment Insurance", payment.ei.ToString("C2") };
                 dataGridViewTaxes.Rows.Add(ei);
 
-                object[] cpp = { "Canada Pension Plan", payment.cpp };
+                object[] cpp = { "Canada Pension Plan", payment.cpp.ToString("C2") };
                 dataGridViewTaxes.Rows.Add(cpp);
 
                 dataGridViewTotalPay.Refresh();
@@ -324,12 +299,19 @@ namespace TimeSheet
             // load month and year combobox 
             var selectedEmployee = context.Employee.FirstOrDefault(se => se.email.Equals(selectedEmail));
 
+            var currentMonth = DateTime.UtcNow.Month;
+            var currentYear = DateTime.UtcNow.Year;
             var timesheetList= (from timesheet in context.TimeSheet
                                     where timesheet.employeeId == selectedEmployee.Id
+                                    &&    timesheet.TimeSheetMonth.month < currentMonth                                   
                                     select timesheet).ToList();
 
 
+            //Excluding timesheets that have a payment generated already which means it was approved by the admin earlier
+            var payments = context.Payment.Where(p => p.employeeId == selectedEmployee.Id).Select(p=>p.timesheetMonthId).ToList();
 
+            timesheetList.RemoveAll(p => payments.Contains(p.timesheetMonthId));
+           
             // clear combobox before adding items
             monthCB.Items.Clear();
             yearCB.Items.Clear();
@@ -418,9 +400,9 @@ namespace TimeSheet
             if (anualIncome <= 10682)
                 return 0;
             else if (anualIncome <= 40707)
-                return anualIncome * 0.0506M;
+                return grossPay * 0.0506M;
             else if (anualIncome <= 81416)
-                return anualIncome * 0.0770M;
+                return grossPay * 0.0770M;
             else if (anualIncome <= 93476)
                 return grossPay * 0.105M;
             else if (anualIncome <= 113506)
@@ -438,9 +420,9 @@ namespace TimeSheet
             if (anualIncome <= 12069)
                 return 0;
             else if (anualIncome <= 47630)
-                return anualIncome * 0.15M;
+                return grossPay * 0.15M;
             else if (anualIncome <= 95259)
-                return anualIncome * 0.205M;
+                return grossPay * 0.205M;
             else if (anualIncome <= 147667)
                 return grossPay * 0.26M;
             else if (anualIncome <= 210371)
@@ -458,5 +440,7 @@ namespace TimeSheet
         {
             return (grossPay * 0.0163M);
         }
+
+        
     }
 }
